@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <!-- Essential Scripts -->
+    <script src="auth-guard.js"></script>
+    <script src="theme-loader.js"></script>
+    <script src="notifications.js"></script>
+
+    <!-- Stylesheets & Libraries -->
+    <link rel="stylesheet" href="global-theme.css">
+    <link rel="stylesheet" href="dashboard-style.css"> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex bg-gray-100 dark:bg-gray-900">
+
+    <!-- Background scene element -->
+    <div class="background-scene" id="backgroundScene"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 h-screen fixed md:relative z-40">
+        <!-- Sidebar content will be populated by JS/HTML from other files if needed, or placed here -->
+        <div class="flex items-center justify-center h-16 border-b border-gray-700">
+            <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="dashboard.html" class="sidebar-link active">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span class="sidebar-text">Dashboard</span>
+            </a>
+            <a href="admin-chat.html" class="sidebar-link">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                <span class="sidebar-text">Student Messages</span>
+            </a>
+            <a href="add-record.html" class="sidebar-link">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="sidebar-text">Add Record</span>
+            </a>
+            <a href="view-records.html" class="sidebar-link"> 
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span class="sidebar-text">Manage Records</span>
+            </a>
+            <a href="import-records.html" class="sidebar-link">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span class="sidebar-text">Bulk Import</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-700">
+             <button id="sidebarLogoutButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150 flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                <span class="sidebar-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainContentArea" class="flex-1 flex flex-col">
+        <!-- Top Navbar -->
+        <header class="h-16 flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 floating-panel shadow-md">
+            <div class="flex items-center">
+                <button id="sidebarToggle" type="button" class="md:hidden mr-4 text-gray-600 dark:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h1 id="dashboardTitle" class="text-xl font-semibold">Dashboard Overview</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm hidden sm:inline" id="welcomeMessage">Welcome, Admin!</span>
+                <button id="darkModeToggle" type="button" class="p-2 rounded-full">
+                    <svg class="w-5 h-5 moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg class="w-5 h-5 sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+                <button id="navbarLogoutButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition duration-150 hidden md:inline-flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+            <section id="summaryStatsSection" class="mb-8 fade-in-on-load">
+                <h2 class="text-2xl font-semibold mb-5">At a Glance</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="view-records.html" id="totalStudentsCard" class="stat-card p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 mr-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold stat-value" id="totalStudentsStat">0</p>
+                                <p class="text-sm stat-label">Total Students</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="view-records.html?filter=recent" id="recentEntriesCard" class="stat-card p-6 rounded-xl shadow-lg">
+                         <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 mr-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold stat-value" id="recentEntriesStat">0</p>
+                                <p class="text-sm stat-label">Recent Entries</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="view-records.html?filter=alerts" id="alertsCard" class="stat-card p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 mr-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold stat-value" id="alertsStat">0</p>
+                                <p class="text-sm stat-label">Active Alerts</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="admin-chat.html" class="stat-card p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 mr-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold stat-value" id="unreadMessagesStat">0</p>
+                                <p class="text-sm stat-label">Unread Messages</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <section id="chartsSection" class="fade-in-on-load">
+                <h2 class="text-xl font-semibold mb-4">Data Visualization</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="chart-container floating-panel p-6 rounded-lg shadow">
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                    <div class="chart-container floating-panel p-6 rounded-lg shadow">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="floating-panel border-t mt-auto py-4 text-center text-xs">
+            <p class="text-gray-500 dark:text-gray-400">&copy; <span id="currentYear"></span> Student Health Services. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+        const yearSpan = document.getElementById('currentYear');
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        const scene = document.getElementById('backgroundScene');
+        if (scene) {
+            for (let i = 0; i < 50; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                line.style.top = `${Math.random() * 100}vh`;
+                line.style.width = `${Math.random() * 200 + 100}px`;
+                line.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                line.style.animationDelay = `${Math.random() * 5}s`;
+                scene.appendChild(line);
+            }
+        }
+    </script>
+</body>
+</html>

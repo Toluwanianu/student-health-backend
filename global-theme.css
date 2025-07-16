@@ -1,0 +1,56 @@
+/* global-theme.css */
+/* Base Light Theme Variables */
+:root {
+    --bg-primary: #f7fafc; /* gray-100 */
+    --bg-secondary: #ffffff; /* white */
+    --text-primary: #1f2937; /* gray-800 */
+    --text-secondary: #4b5563; /* gray-600 */
+    --border-primary: #e5e7eb; /* gray-200 */
+    --accent-color: #4f46e5; /* indigo-600 */
+}
+
+/* Dark Theme Variables */
+html.dark {
+    --bg-primary: #111827; /* gray-900 */
+    --bg-secondary: #1f2937; /* gray-800 */
+    --text-primary: #f3f4f6; /* gray-100 */
+    --text-secondary: #9ca3af; /* gray-400 */
+    --border-primary: #374151; /* gray-700 */
+    --accent-color: #818cf8; /* indigo-400 */
+}
+
+/* Apply the variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Example of how you'd style other elements */
+.page-container { /* A class for main content containers */
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+}
+
+h1, h2, h3 {
+    color: var(--text-primary);
+}
+
+/* 3D Animated Blobs */
+@keyframes blob1 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-40px) scale(1.1); }
+}
+@keyframes blob2 {
+  0%, 100% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(-60px) scale(1.15); }
+}
+@keyframes blob3 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-30px, 40px) scale(1.08); }
+}
+.animate-blob1 { animation: blob1 12s ease-in-out infinite; }
+.animate-blob2 { animation: blob2 14s ease-in-out infinite; }
+.animate-blob3 { animation: blob3 16s ease-in-out infinite; }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Import Student Records</title>
+    <script src="auth-guard.js"></script>
+    <link rel="stylesheet" href="notification.css"> <!-- Correct link to notifications CSS -->
+
+    <!-- 4. Link to Tailwind and other libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="notification.js"></script> 
+    <!-- We'll use PapaParse library to read the CSV file. Include it from a CDN. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link rel="stylesheet" href="import-records-style.css">
+</head>
+<body>
+    <!-- 3D Animated Background with theme support -->
+    <div class="fixed inset-0 -z-10 pointer-events-none">
+      <!-- Light mode blobs -->
+      <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-blue-400 opacity-30 rounded-full blur-3xl animate-blob1 dark:hidden"></div>
+      <div class="absolute top-[60%] left-[60%] w-[350px] h-[350px] bg-purple-400 opacity-30 rounded-full blur-3xl animate-blob2 dark:hidden"></div>
+      <div class="absolute top-[30%] left-[70%] w-[300px] h-[300px] bg-pink-400 opacity-30 rounded-full blur-3xl animate-blob3 dark:hidden"></div>
+      <!-- Dark mode blobs -->
+      <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-teal-700 opacity-40 rounded-full blur-3xl animate-blob1 hidden dark:block"></div>
+      <div class="absolute top-[60%] left-[60%] w-[350px] h-[350px] bg-indigo-800 opacity-40 rounded-full blur-3xl animate-blob2 hidden dark:block"></div>
+      <div class="absolute top-[30%] left-[70%] w-[300px] h-[300px] bg-violet-800 opacity-40 rounded-full blur-3xl animate-blob3 hidden dark:block"></div>
+    </div>
+
+    <div class="import-page-container">
+        <div class="navigation-header">
+            <a href="dashboard.html" class="header-button back-btn">&larr; Back to Dashboard</a>
+            <h1 class="page-title">Bulk Import Student Records</h1>
+            <div style="width: 180px;"></div> <!-- Spacer -->
+        </div>
+
+        <div class="import-instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Download your student data as a <strong>CSV file</strong> (e.g., from Google Sheets).</li>
+                <li>Ensure the CSV has a header row with column names matching the database fields (e.g., `fullName`, `matric_no`, `department`). <a href="#" id="downloadTemplateLink">Download Template</a></li>
+                <li>Choose the CSV file below and click "Upload and Process".</li>
+            </ol>
+        </div>
+
+        <div class="upload-section">
+            <input type="file" id="csvFileInput" accept=".csv">
+            <label for="csvFileInput" class="file-upload-label">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="upload-icon"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.59L7.3 9.7a.75.75 0 00-1.1 1.02l3.25 3.5a.75.75 0 001.1 0l3.25-3.5a.75.75 0 10-1.1-1.02l-1.95 2.1V6.75z" clip-rule="evenodd" /></svg>
+                <span id="file-chosen-text">Choose a CSV file...</span>
+            </label>
+            <button id="uploadButton" disabled>Upload and Process</button>
+        </div>
+
+        <div id="results-container" class="results-container" style="display: none;">
+            <h3>Import Results</h3>
+            <pre id="results-log"></pre>
+        </div>
+
+    </div>
+    <script src="import-records.js"></script>
+</body>
+</html>

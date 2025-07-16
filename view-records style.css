@@ -1,0 +1,63 @@
+/* view-records-style.css - Corrected for Theming and Pagination */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary); 
+    color: var(--text-primary); 
+    line-height: 1.65;
+}
+.container {
+    max-width: 1600px; 
+    margin: 30px auto;
+    padding: 25px 35px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
+}
+
+/* Header Styles */
+.navigation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-primary); }
+h1.page-title { text-align: center; color: var(--text-primary); font-weight: 700; font-size: 2rem; letter-spacing: -0.5px; flex-grow: 1; }
+.header-button { display: inline-flex; align-items: center; padding: 10px 18px; color: white; text-decoration: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; transition: all 0.25s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; }
+.header-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.button-icon { width: 1.1em; height: 1.1em; margin-right: 0.5em; }
+.back-btn { background-color: #64748b; } .back-btn:hover { background-color: #475569; }
+.add-record-btn { background-color: #059669; } .add-record-btn:hover { background-color: #047857; }
+
+/* Filter Controls Section */
+.filter-controls { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; align-items: flex-end; margin-bottom: 30px; padding: 20px; background-color: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-primary); }
+.filter-group { display: flex; flex-direction: column; }
+.filter-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; }
+.filter-select, #searchInput { width: 100%; padding: 10px 12px; border: 1px solid var(--border-primary); border-radius: 6px; font-size: 0.9rem; color: var(--text-primary); background-color: var(--bg-secondary); box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.3s ease; }
+.filter-select:focus, #searchInput:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); outline: none; }
+#searchInput::placeholder { color: var(--text-secondary); }
+.button-group { justify-content: flex-end; }
+.clear-filters-btn { width: 100%; padding: 10px 12px; background-color: #6c757d; color: white; border: none; border-radius: 6px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: background-color 0.2s ease; }
+.clear-filters-btn:hover { background-color: #5a6268; }
+
+/* Table styles */
+.table-responsive-wrapper { overflow-x: auto; width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.075); background-color: var(--bg-secondary); }
+.table-responsive-wrapper table { width: 100%; border-collapse: separate; border-spacing: 0; }
+th, td { border-bottom: 1px solid var(--border-primary); padding: 14px 18px; text-align: left; vertical-align: middle; font-size: 0.875rem; color: var(--text-secondary); }
+thead th { background-color: var(--bg-primary); color: var(--text-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.075em; border-top: 1px solid var(--border-primary); border-bottom-width: 2px; position: sticky; top: 0; z-index: 10; }
+tbody tr:last-child td { border-bottom: none; }
+html:not(.dark) tbody tr:hover { background-color: #f0f4f8; }
+html.dark tbody tr:hover { background-color: #374151; }
+.actions-cell { white-space: nowrap; text-align: right; }
+.edit-btn, .delete-btn, .download-btn { padding: 7px 12px; border: 1px solid transparent; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.8rem; transition: all 0.2s ease-in-out; margin-left: 8px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.edit-btn:first-child, .delete-btn:first-child, .download-btn:first-child { margin-left: 0; }
+.edit-btn { background-color: #3b82f6; color: white; border-color: #3b82f6; } .edit-btn:hover { background-color: #2563eb; border-color: #2563eb; transform: translateY(-1px); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2); }
+.delete-btn { background-color: #ef4444; color: white; border-color: #ef4444; } .delete-btn:hover { background-color: #dc2626; border-color: #dc2626; transform: translateY(-1px); box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2); }
+.download-btn { background-color: #10b981; color: white; border-color: #10b981; } .download-btn:hover { background-color: #059669; border-color: #059669; transform: translateY(-1px); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2); }
+
+/* Pagination Styles */
+.pagination-container { display: flex; justify-content: space-between; align-items: center; padding: 1rem; margin-top: 1.5rem; border-top: 1px solid var(--border-primary); }
+.pagination-info { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+.pagination-button { padding: 8px 16px; border: 1px solid #d1d5db; background-color: var(--bg-secondary); color: var(--text-primary); border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; font-weight: 500; }
+.pagination-button:hover:not(:disabled) { background-color: #f3f4f6; border-color: #adb5bd; }
+html.dark .pagination-button:hover:not(:disabled) { background-color: #374151; }
+.pagination-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) { .container { margin: 20px; padding: 15px; } .navigation-header { flex-direction: column; gap: 15px; } .header-button { align-self: stretch; justify-content: center; } h1.page-title { font-size: 1.75rem; text-align: center; } .filter-controls { grid-template-columns: 1fr; } }

@@ -1,0 +1,70 @@
+/* notifications.css */
+/* Styles for the toast notification system */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none; /* Allow clicks to pass through the container */
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    min-width: 300px;
+    max-width: 380px;
+    opacity: 0;
+    transform: translateX(100%);
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards;
+    pointer-events: auto; /* Re-enable clicks on the toast itself */
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.toast-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Toast Types */
+.toast.success {
+    background-color: #28a745; /* Green */
+}
+.toast.error {
+    background-color: #dc3545; /* Red */
+}
+.toast.info {
+    background-color: #17a2b8; /* Blue/Info */
+}
+
+/* Animations */
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}

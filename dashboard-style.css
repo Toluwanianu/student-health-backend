@@ -1,0 +1,57 @@
+/* dashboard-style.css - Corrected for Modern Layout */
+
+/* Assumes global-theme.css is linked first in the HTML */
+
+/* --- Animated Background --- */
+.background-scene { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #00000c; overflow: hidden; z-index: -2; }
+.line { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, #3c71b5, transparent); animation: move 10s linear infinite; }
+@keyframes move { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+
+/* --- Main Layout --- */
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+#mainContentArea { transition: margin-left 0.3s ease-in-out; }
+
+/* --- Sidebar --- */
+#sidebar {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+.sidebar-link { display: flex; align-items: center; padding: 0.875rem 1.5rem; color: #d1d5db; font-weight: 500; border-left: 4px solid transparent; transition: all 0.2s ease-in-out; white-space: nowrap; }
+.sidebar-link:hover, .sidebar-link.active { background-color: rgba(55, 65, 81, 0.7); color: #ffffff; border-left-color: #6366f1; }
+.sidebar-link svg { margin-right: 0.875rem; width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+
+/* --- Floating Panel Style (Glassmorphism) --- */
+.floating-panel {
+    background: var(--bg-secondary-light, rgba(255, 255, 255, 0.9));
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+html.dark .floating-panel {
+    background: var(--bg-secondary-dark, rgba(31, 41, 55, 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* --- Stat Cards & Effects --- */
+.stat-card { transition: all 0.3s ease-in-out; }
+.stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+html.dark .stat-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+/* --- Charts --- */
+.chart-container { min-height: 300px; height: 40vh; }
+
+/* --- Fading Load Effect --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-on-load { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+#summaryStatsSection { animation-delay: 100ms; }
+#chartsSection { animation-delay: 250ms; }
+
+/* Dark Mode Toggle Icons */
+html.dark #darkModeToggle .sun-icon { display: inline-block; } 
+html.dark #darkModeToggle .moon-icon { display: none; }
+html:not(.dark) #darkModeToggle .sun-icon { display: none; } 
+html:not(.dark) #darkModeToggle .moon-icon { display: inline-block; }

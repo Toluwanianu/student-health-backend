@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Student Records</title>
+
+    <!-- Essential Scripts -->
+    <script src="auth-guard.js"></script>
+    <script src="theme-loader.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="global-theme.css">
+    <link rel="stylesheet" href="view-records style.css"> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation-header">
+            <a href="dashboard.html" class="header-button back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button-icon"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                Dashboard
+            </a>
+            <h1 class="page-title">Student Health Records</h1>
+            <a href="add-record.html" class="header-button add-record-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button-icon"><path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" /></svg>
+                Add Record
+            </a>
+        </div>
+
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label for="departmentFilter">Department</label>
+                <select id="departmentFilter" class="filter-select">
+                    <option value="">All Departments</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="facultyFilter">Faculty</label>
+                <select id="facultyFilter" class="filter-select">
+                    <option value="">All Faculties</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="genderFilter">Gender</label>
+                <select id="genderFilter" class="filter-select">
+                    <option value="">All Genders</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="statusFilter">Health Status</label>
+                <select id="statusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                </select>
+            </div>
+            <div class="filter-group search-group">
+                <label for="searchInput">Text Search</label>
+                <input type="text" id="searchInput" placeholder="Search by Name, Matric No...">
+            </div>
+            <div class="filter-group button-group">
+                <button id="clearFiltersBtn" class="clear-filters-btn">Clear Filters</button>
+            </div>
+        </div>
+
+        <div class="table-responsive-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matric Number</th>
+                        <th>Full Name</th>
+                        <th>Department</th>
+                        <th>Faculty</th>
+                        <th>Gender</th>
+                        <th>Health Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="records-body">
+                    <!-- This will be populated by view-records.js -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination Controls -->
+        <div id="pagination-controls" class="pagination-container">
+            <button id="prev-page-btn" class="pagination-button" disabled>&larr; Previous</button>
+            <span id="pagination-info" class="pagination-info">Page 1 of 1</span>
+            <button id="next-page-btn" class="pagination-button" disabled>Next &rarr;</button>
+        </div>
+    </div>
+
+    <script src="view-records.js"></script>
+</body>
+</html>

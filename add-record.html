@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Student Record</title>
+    <script src="auth-guard.js"></script>
+
+    <!-- 1. LOAD THE THEME LOADER SCRIPT FIRST and IMMEDIATELY -->
+    <script src="theme-loader.js"></script>
+
+    <!-- 2. Link to your new central theme file -->
+    <link rel="stylesheet" href="global-theme.css">
+
+    <!-- 3. Link to any page-specific CSS -->
+    <link rel="stylesheet" href="add-record.style.css">
+    <link rel="stylesheet" href="notification.css"> <!-- Correct link to notifications CSS -->
+
+    <!-- 4. Link to Tailwind and other libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="notification.js"></script> 
+</head>
+<body>
+    <div class="form-page-container">
+        <div class="navigation-header">
+            <a href="dashboard.html" class="header-button back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button-icon"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                Dashboard
+            </a>
+            <h1 class="page-title">Add New Student Record</h1>
+            <a href="view-records.html" class="header-button view-records-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button-icon"><path d="M3 3.5A1.5 1.5 0 014.5 2h11A1.5 1.5 0 0117 3.5v13a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 013 16.5v-13zM10 5a.75.75 0 00-1.5 0v1.5H7a.75.75 0 000 1.5h1.5V9.5a.75.75 0 001.5 0V8h1.5a.75.75 0 000-1.5H10V5zM6.25 11.5a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5h-7.5zM6.25 14.5a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5h-7.5z" /></svg>
+                View Records
+            </a>
+        </div>
+
+        <form id="addStudentForm">
+            <!-- Personal and Academic Info -->
+            <div class="form-group">
+                <input type="text" id="fullName" name="fullName" class="form-input" placeholder=" " required />
+                <label for="fullName" class="form-label">Full Name</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="matric_no" name="matric_no" class="form-input" placeholder=" " required />
+                <label for="matric_no" class="form-label">Matric Number</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="department" name="department" class="form-input" placeholder=" " required />
+                <label for="department" class="form-label">Department</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="faculty" name="faculty" class="form-input" placeholder=" " />
+                <label for="faculty" class="form-label">Faculty</label>
+            </div>
+
+            <!-- New Password Section -->
+            <h3 class="section-title">Set Student Login Credentials</h3>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-input" placeholder=" " required />
+                <label for="password" class="form-label">Set Student Password</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder=" " required />
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+            </div>
+
+            <!-- Other Health and Contact Info -->
+            <h3 class="section-title">Health & Contact Information</h3>
+            <div class="form-group">
+                <input type="text" id="medical_number" name="medical_number" class="form-input" placeholder=" " />
+                <label for="medical_number" class="form-label">Medical Number</label>
+            </div>
+            <div class="form-group">
+                <input type="number" id="age" name="age" class="form-input" placeholder=" " />
+                <label for="age" class="form-label">Age</label>
+            </div>
+            <div class="form-group">
+                <select id="gender" name="gender" class="form-input" required>
+                    <option value="" disabled selected hidden></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <label for="gender" class="form-label">Gender</label>
+            </div>
+            <!-- ... all other existing form groups for health and contact details ... -->
+            <div class="form-group">
+                <input type="text" id="genotype" name="genotype" class="form-input" placeholder=" " />
+                <label for="genotype" class="form-label">Genotype</label>
+            </div>
+            <div class="form-group">
+                <textarea id="allergies" name="allergies" class="form-input" placeholder=" "></textarea>
+                <label for="allergies" class="form-label">Allergies</label>
+            </div>
+            <div class="form-group">
+                <textarea id="current_complaint" name="current_complaint" class="form-input" placeholder=" "></textarea>
+                <label for="current_complaint" class="form-label">Current Complaint</label>
+            </div>
+            <div class="form-group">
+                <textarea id="drugsGiven" name="drugs_given" class="form-input" placeholder=" "></textarea>
+                <label for="drugsGiven" class="form-label">Drug(s) Given</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="healthStatus" name="healthStatus" class="form-input" placeholder=" " />
+                <label for="healthStatus" class="form-label">Health Status</label>
+            </div>
+            <!-- ... etc. ... -->
+
+            <button type="submit" id="addRecordBtn">Add Record</button>
+        </form>
+    </div>
+
+    <!-- Success Modal/Pop-up (structure remains the same) -->
+    <div id="successModal" class="modal-overlay">
+        
+    </div>
+
+    <script src="add-record.js"></script>
+</body>
+</html>

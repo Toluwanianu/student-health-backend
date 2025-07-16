@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Student Health System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="notifications.css">
+<script src="notifications.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Hide scrollbars for the full-screen effect */
+        }
+        
+        /* --- VR-style Background Scene --- */
+        .background-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #00000c; /* Very dark blue/black background */
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3c71b5, transparent);
+            animation: move 10s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100vw);
+            }
+        }
+        /* --- End of Background Scene --- */
+
+
+        /* --- 3D Panel Tilt Effect --- */
+        .perspective-container {
+            perspective: 1500px; 
+        }
+        .login-panel-3d {
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            /* Semi-transparent glassmorphism effect */
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        .perspective-container:hover .login-panel-3d {
+            transform: rotateY(-5deg) rotateX(2deg) scale(1.02); 
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Left Panel Glowing Curve --- */
+        .curved-bg {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+        .curved-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%; 
+            height: 120%;
+            top: -10%; 
+            left: -50%; 
+            background-image: linear-gradient(45deg, rgba(0, 242, 254, 0.5), rgba(79, 172, 254, 0.5));
+            border-bottom-right-radius: 100% 50%; 
+            z-index: 0;
+            filter: blur(20px);
+            opacity: 0.7;
+        }
+        .curved-bg > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* --- 3D Button Effect --- */
+        .button-container-3d {
+            perspective: 500px;
+        }
+        .login-button-3d {
+            background-image: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+            transition: all 0.2s ease-out;
+            transform-style: preserve-3d;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .button-container-3d:hover .login-button-3d {
+            transform: scale(0.98) translateZ(-10px); /* Push button in on hover */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .login-button-3d:active {
+             transform: scale(0.96) translateZ(-20px); /* Deeper push on click */
+             box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        }
+
+        .error-message {
+            color: #fca5a5; /* light red */
+            font-size: 0.875rem; 
+            margin-top: 0.75rem; 
+            text-align: center;
+            min-height: 1.25rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-scene" id="backgroundScene"></div>
+
+    <div class="perspective-container flex items-center justify-center min-h-screen p-4 sm:p-6">
+        <div class="login-panel-3d rounded-2xl flex flex-col md:flex-row w-full max-w-4xl overflow-hidden my-auto">
+            <!-- Left Panel -->
+            <div class="w-full md:w-2/5 curved-bg text-white p-8 sm:p-12 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                <h1 class="text-4xl lg:text-5xl font-extrabold mb-4 leading-tight">Secure Access</h1>
+                <p class="mb-8 text-lg opacity-90">
+                    Student Health System Portal. <br> Login with your authorized credentials.
+                </p>
+                <p class="text-sm opacity-80">
+                    For assistance, please contact the system administrator.
+                </p>
+            </div>
+
+            <!-- Right Panel (Login Form) -->
+            <div class="w-full md:w-3/5 p-8 sm:p-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-100 mb-3 text-center">Admin Login</h2>
+                <p class="text-gray-400 mb-10 text-center">Welcome! Please enter your credentials.</p>
+
+                <form id="loginForm">
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email or Username</label>
+                        <input type="text" id="email" name="email" required
+                               class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out"
+                               placeholder="Enter your email or username">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" required
+                                   class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out pr-10"
+                                   placeholder="Enter your password">
+                            <button type="button" id="passwordToggle" aria-label="Show or hide password" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
+                                <svg id="eyeIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
+                                <svg id="eyeSlashIcon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.955 9.955 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" /><path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.742L2.293 6.546A10.004 10.004 0 00.458 10c1.274 4.057 5.064 7 9.542 7 1.852 0 3.576-.428 5.088-1.197l-1.636-1.636a12.047 12.047 0 01-1.545.097z" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                       
+
+                    <!-- ***** UPDATED THIS SECTION ***** -->
+                    <div class="text-right mb-8">
+                        <a href="forgot-password.html" class="text-sm text-blue-400 hover:text-blue-300 hover:underline transition duration-300 ease-in-out font-medium"> 
+                            Forgot Password?
+                        </a>
+                    </div>
+                    <!-- ****************************** -->
+                    
+                    <div class="button-container-3d">
+                        <button type="submit" id="loginBtn"
+                                class="w-full login-button-3d text-white font-semibold py-3.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 transition duration-300 ease-in-out text-lg">
+                            Login Securely
+                        </button>
+                    </div>
+                    <p class="error-message" id="errorMessage"></p>
+                </form>
+
+                <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                    <p class="text-xs text-gray-500">
+                        Authorized access only.
+                    </p>
+                    <p class="text-xs text-gray-500 mt-1">
+                        &copy; <span id="currentYear"></span> Student Health Services. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Show/Hide Password Logic
+        const passwordInput = document.getElementById('password');
+        const passwordToggleBtn = document.getElementById('passwordToggle');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const eyeSlashIcon = document.getElementById('eyeSlashIcon');
+
+        if (passwordToggleBtn) {
+            passwordToggleBtn.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                eyeIcon.classList.toggle('hidden');
+                eyeSlashIcon.classList.toggle('hidden');
+            });
+        }
+
+        // Animated Background Scene Logic
+        const scene = document.getElementById('backgroundScene');
+        const lineCount = 50; // Number of lines
+        for (let i = 0; i < lineCount; i++) {
+            const line = document.createElement('div');
+            line.className = 'line';
+            line.style.top = `${Math.random() * 100}vh`;
+            line.style.width = `${Math.random() * 200 + 100}px`;
+            line.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5 to 10 seconds
+            line.style.animationDelay = `${Math.random() * 5}s`;
+            scene.appendChild(line);
+        }
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
