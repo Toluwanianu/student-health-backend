@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Determine the correct API endpoint based on the userType from the URL
         const apiUrl = userType === 'admin' 
-            ? `http://localhost:3000/api/auth/reset-password/${token}`
-            : `http://localhost:3000/api/student/reset-password/${token}`;
+            ? `https://student-health-backend.onrender.com/api/auth/reset-password/${token}`
+            : `https://student-health-backend.onrender.com/api/student/reset-password/${token}`;
         
         try {
             const response = await fetch(apiUrl, {

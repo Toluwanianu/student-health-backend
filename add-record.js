@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             try {
-                const apiUrl = 'http://localhost:3000/api/students'; 
+                const apiUrl = 'https://student-health-backend.onrender.com'; 
 
                 const response = await fetch(apiUrl, {
                     method: 'POST',

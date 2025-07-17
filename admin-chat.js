@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchConversations() {
         try {
             // Fetch conversations awaiting admin reply first for priority
-            const conversations = await fetchApi('http://localhost:3000/api/conversations/admin?status=Awaiting Admin Reply');
+            const conversations = await fetchApi('https://student-health-backend.onrender.com/api/conversations/admin?status=Awaiting Admin Reply');
             currentConversations = conversations;
             renderConversationList(currentConversations);
             
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(confirm('Are you sure you want to permanently delete this entire conversation? This cannot be undone.')) {
                 try {
-                    await fetchApi(`http://localhost:3000/api/conversations/${conversationId}`, { method: 'DELETE' });
+                    await fetchApi(`https://student-health-backend.onrender.com/api/conversations/${conversationId}`, { method: 'DELETE' });
                     showPlaceholder();
                     fetchConversations(); // Refresh the list on the left
                 } catch(error) {
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!message) return;
 
         try {
-            const updatedConversation = await fetchApi(`http://localhost:3000/api/conversations/${conversationId}/messages`, {
+            const updatedConversation = await fetchApi(`https://student-health-backend.onrender.com/api/conversations/${conversationId}/messages`, {
                 method: 'POST',
                 body: JSON.stringify({ message })
             });
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.hidden || activeConversationId !== conversationId) return; 
 
         try {
-            const conversationOnServer = await fetchApi(`http://localhost:3000/api/conversations/${conversationId}`);
+            const conversationOnServer = await fetchApi(`https://student-health-backend.onrender.com/api/conversations/${conversationId}`);
             const localConversation = currentConversations.find(c => c._id === conversationId);
 
             if (localConversation && conversationOnServer.messages.length > localConversation.messages.length) {

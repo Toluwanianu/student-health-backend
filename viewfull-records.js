@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('authToken');
     if (!token) {
         console.warn("Auth Guard: No admin token found. Redirecting to login.");
-        window.location.href = 'login.html.html';
+        window.location.href = 'login.html.html'; // Redirect to login if no token
         return;
     }
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // ***** THIS IS THE CORRECTED URL *****
-            const apiUrl = `http://localhost:3000/api/students/${studentId}`;
+            const apiUrl = `https://student-health-backend.onrender.com/api/students/${studentId}`;
             // ************************************
             
             console.log(`[ViewFullRecordJS] Fetching from: ${apiUrl}`);

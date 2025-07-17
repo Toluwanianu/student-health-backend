@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         try {
-            const apiUrl = 'http://localhost:3000/api/auth/login';
+            const apiUrl = 'https://student-health-backend.onrender.com/api/auth/login';
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {

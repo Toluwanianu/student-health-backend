@@ -65,12 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadStudentData() {
         console.log('[DEBUG EditPage] Loading data for ID:', studentIdFromStorage);
         try {
-            const getApiUrl = `http://localhost:3000/api/students/${studentIdFromStorage}`;
+            const getApiUrl = `https://student-health-backend.onrender.com/api/students/${studentIdFromStorage}`;
             const response = await fetch(getApiUrl, { headers: getAuthHeaders() });
 
             if (response.status === 401) {
                 alert('Your session has expired. Please log in again.');
-                window.location.href = 'login.html';
+                window.location.href = 'login.html.html';
                 return;
             }
             if (!response.ok) throw new Error("Failed to fetch student data.");
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('[DEBUG EditPage] Data being sent for update:', updatedData);
 
         try {
-            const updateApiUrl = `http://localhost:3000/api/students/${studentIdFromStorage}`;
+            const updateApiUrl = `https://student-health-backend.onrender.com/api/students/${studentIdFromStorage}`;
             const response = await fetch(updateApiUrl, {
                 method: "PUT",
                 headers: getAuthHeaders(),

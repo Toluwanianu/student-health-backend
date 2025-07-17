@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let body = {};
 
         if (userType === 'admin') {
-            apiUrl = 'http://localhost:3000/api/auth/forgot-password';
+            apiUrl = 'https://dashing-daffodil-b7fcc1.netlify.app/api/auth/forgot-password';
             body = { username: identifier };
         } else { // student
-            apiUrl = 'http://localhost:3000/api/student/forgot-password';
+            apiUrl = 'https://dashing-daffodil-b7fcc1.netlify.app/api/student/forgot-password';
             body = { email: identifier };
         }
 

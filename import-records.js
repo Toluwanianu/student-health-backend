@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsLog.textContent = `Uploading ${parsedData.length} records...`;
 
         try {
-            const apiUrl = 'http://localhost:3000/api/students/bulk-import';
+            const apiUrl = 'https://dashing-daffodil-b7fcc1.netlify.app/api/students/bulk-import';
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: getAuthHeaders(), // <-- ADDED AUTH HEADERS
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const resultData = await response.json();
 
             if (response.status === 401) {
-                window.location.href = 'login.html';
+                window.location.href = 'login.html.html';
                 return;
             }
 

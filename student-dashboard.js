@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data Fetching ---
     async function fetchMyRecord() {
         try {
-            const record = await fetchApi('http://localhost:3000/api/student/my-record');
+            const record = await fetchApi('https://student-health-backend.onrender.com/api/student/my-record');
             myRecordDetailsDiv.innerHTML = `
                 <h3 class="text-lg font-semibold mb-2" style="color: var(--text-primary);">Personal & Academic</h3>
                 <div class="record-item"><span class="record-label">Full Name:</span> <span class="record-value">${record.fullName || 'N/A'}</span></div>
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchConversations() {
         try {
-            const conversations = await fetchApi('http://localhost:3000/api/conversations/student');
+            const conversations = await fetchApi('https://student-health-backend.onrender.com/api/conversations/student');
             currentConversations = conversations;
             populateConversationSelector(currentConversations);
             const conversationToShow = activeConversationId ? activeConversationId : (conversations[0]?._id || null);
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const message = replyMessageInput.value.trim();
             if (!message || !conversationId) return;
             try {
-                const updatedConversation = await fetchApi(`http://localhost:3000/api/conversations/${conversationId}/messages`, {
+                const updatedConversation = await fetchApi(`https://student-health-backend.onrender.com/api/conversations/${conversationId}/messages`, {
                     method: 'POST',
                     body: JSON.stringify({ message })
                 });
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const message = document.getElementById('messageInput').value.trim();
             if (!subject || !message) { alert('Subject and message are required.'); return; }
             try {
-                const newConvo = await fetchApi('http://localhost:3000/api/conversations/student', {
+                const newConvo = await fetchApi('https://student-health-backend.onrender.com/api/conversations/student', {
                     method: 'POST',
                     body: JSON.stringify({ subject, message })
                 });
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function pollForNewMessages(conversationId) {
         if (document.hidden || activeConversationId !== conversationId) return; 
         try {
-            const conversationOnServer = await fetchApi(`http://localhost:3000/api/conversations/${conversationId}`);
+            const conversationOnServer = await fetchApi(`https://student-health-backend.onrender.com/api/conversations/${conversationId}`);
             const localConversation = currentConversations.find(c => c._id === conversationId);
             if (localConversation && conversationOnServer.messages.length > localConversation.messages.length) {
                 console.log("[Polling] New message found! Updating chat window.");

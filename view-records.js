@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         params.append('limit', 10);
         
         const queryString = params.toString();
-        const apiUrl = `http://localhost:3000/api/students?${queryString}`;
+        const apiUrl = `https://student-health-backend.onrender.com/api/students?${queryString}`;
         try {
             const response = await fetch(apiUrl, { headers: getAuthHeaders() });
             if (response.status === 401) { window.location.href = 'login.html.html'; return; }
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // This initial fetch gets ALL students just for populating filters.
             // A more optimized approach for very large datasets would be a separate API endpoint for filter options.
-            const initialResponse = await fetch('http://localhost:3000/api/students', { headers: getAuthHeaders() });
+            const initialResponse = await fetch('https://student-health-backend.onrender.com/api/students', { headers: getAuthHeaders() });
             if (initialResponse.status === 401) { window.location.href = 'login.html.html'; return; }
             if (!initialResponse.ok) throw new Error(`HTTP error! Status: ${initialResponse.status}`);
             
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (target.classList.contains('delete-btn')) {
             if (confirm(`Are you sure you want to delete this record?`)) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/students/${studentId}`, { method: 'DELETE', headers: getAuthHeaders() });
+                    const response = await fetch(`https://student-health-backend.onrender.com/api/students/${studentId}`, { method: 'DELETE', headers: getAuthHeaders() });
                     if (response.ok) {
                         alert('Record deleted successfully');
                         fetchAndDisplayFilteredRecords(currentPage); // Re-fetch the current page to update view
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else if (target.classList.contains('download-btn')) { 
             try {
-                const response = await fetch(`http://localhost:3000/api/students/${studentId}`, { headers: getAuthHeaders() });
+                const response = await fetch(`https://student-health-backend.onrender.com/api/students/${studentId}`, { headers: getAuthHeaders() });
                 if (!response.ok) throw new Error('Could not fetch full record for download.');
                 const studentToDownload = await response.json();
                 

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (unreadMessagesStatElement) unreadMessagesStatElement.textContent = '...'; // Set loading state for new card
         
         try {
-            const response = await fetch('http://localhost:3000/api/stats/summary', { headers: getAuthHeaders() });
+            const response = await fetch('https://student-health-backend.onrender.com/api/stats/summary', { headers: getAuthHeaders() });
             if (response.status === 401) { window.location.href = 'login.html.html'; return; }
             if (!response.ok) throw new Error(`API error fetching stats: ${response.status}`);
             
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchDataForCharts(themeChanged = false) { 
         if (!departmentChartCtx && !genderChartCtx) return;
         try {
-            const apiUrl = 'http://localhost:3000/api/students';
+            const apiUrl = 'https://student-health-backend.onrender.com/api/students';
             const response = await fetch(apiUrl, { headers: getAuthHeaders() });
             if (response.status === 401) { window.location.href = 'login.html.html'; return; }
             if (!response.ok) throw new Error(`API Error (${response.status})`);
