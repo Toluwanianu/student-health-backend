@@ -1,9 +1,9 @@
 // File: routes/students.js
-// CORRECTED: The path to the Student model now uses a lowercase 's'.
+// This is the complete and corrected version with all routes and proper exports.
 
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/students'); // <-- CORRECTED from '../models/Student'
+const Student = require('../models/student'); // Using lowercase 's' for consistency
 const { protect } = require('../middleware/authMiddleware');
 const PDFDocument = require('pdfkit');
 
@@ -31,8 +31,31 @@ router.get("/", protect, async (req, res) => {
         const students = await Student.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
         res.json({ students, currentPage: page, totalPages, totalRecords });
     } catch (err) {
+        console.error("[Backend] Error fetching students:", err);
         res.status(500).json({ message: err.message });
     }
+});
+
+// POST /api/students - Create a new student
+router.post("/", protect, async (req, res) => {
+  try {
+    const student = new Student(req.body);
+    await student.save();
+    res.status(201).json(student);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// GET /api/students/:id - Get a single student (for viewing or editing)
+router.get("/:id", protect, async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id).select('-password');
+    if (!student) return res.status(404).json({ message: "Not found" });
+    res.json(student);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // GET /api/students/:id/download-pdf - Download a single student record as PDF
@@ -47,7 +70,12 @@ router.get("/:id/download-pdf", protect, async (req, res) => {
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
         doc.pipe(res);
-        // ... (PDF generation logic remains the same) ...
+        // PDF generation logic...
+        doc.fontSize(20).text(`Student Record: ${student.fullName}`);
+        doc.moveDown();
+        doc.fontSize(12).text(`Matric Number: ${student.matric_no}`);
+        doc.text(`Department: ${student.department}`);
+        // Add more fields as needed...
         doc.end();
     } catch (err) {
         console.error("[Backend] Error generating PDF:", err);
@@ -55,7 +83,33 @@ router.get("/:id/download-pdf", protect, async (req, res) => {
     }
 });
 
-// Other routes (POST, GET by ID, PUT, DELETE) remain the same
-// ...
+// PUT /api/students/:id - Update a student
+router.put("/:id", protect, async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+    Object.keys(req.body).forEach(key => {
+        if (req.body[key] !== null && req.body[key] !== undefined) {
+             if (key === 'password' && req.body.password === '') {} 
+             else { student[key] = req.body[key]; }
+        }
+    });
+    const updatedStudent = await student.save();
+    res.json({ message: "Record updated successfully", student: updatedStudent });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// DELETE /api/students/:id - Delete a student
+router.delete("/:id", protect, async (req, res) => {
+  try {
+    const result = await Student.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ message: "Not found" });
+    res.json({ message: "Deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;
