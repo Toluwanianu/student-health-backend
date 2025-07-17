@@ -16,7 +16,7 @@ app.use(express.json());
 
 // --- API Routes ---
 // IMPORTANT: The path must exactly match the filename (including case).
-const studentRoutes = require("./routes/Students"); // Corrected from "./routes/Students"
+const studentRoutes = require("./routes/students"); // Corrected from "./routes/Students"
 const authRoutes = require("./routes/authRoutes");
 const studentAuthRoutes = require("./routes/studentAuthRoutes");
 const statsRoutes = require('./routes/statsRoutes');
