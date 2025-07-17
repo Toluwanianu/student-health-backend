@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
 // ***** THIS ROUTE IS NOW ENABLED *****
 // POST /api/auth/register - Create a new admin account
 router.post('/register', async (req, res) => {
-    console.log('[Backend] /api/auth/register route hit.');
+    console.log('https://student-health-backend.onrender.com/api/auth/register route hit.');
     const { username, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
