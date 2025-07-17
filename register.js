@@ -1,5 +1,5 @@
 // File: register.js
-// Handles the admin registration form submission.
+// Handles the admin registration form submission with the correct API URL.
 
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
@@ -27,7 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
         registerBtn.innerHTML = `<span class="button-spinner"></span> Registering...`;
 
         try {
+            // ***** THIS IS THE CORRECTED URL *****
+            // It should point to your backend server on Render.
             const apiUrl = 'https://student-health-backend.onrender.com/api/auth/register';
+            // ************************************
+
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -39,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 showToast('Admin registered successfully! You can now log in.', 'success');
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html.html'; // Or index.html if you renamed it
                 }, 2000);
             } else {
                 showToast(responseData.message || 'Registration failed.', 'error');
