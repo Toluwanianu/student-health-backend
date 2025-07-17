@@ -3,7 +3,7 @@
 
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/admin'); // To potentially check admin details later
-const Student = require('../models/Student'); // To potentially check student details later
+const Student = require('../models/student'); // To potentially check student details later
 
 const protect = async (req, res, next) => {
     let token;
