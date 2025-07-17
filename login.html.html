@@ -6,8 +6,8 @@
     <title>Login | Student Health System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="notifications.css">
-<script src="notifications.js"></script>
+    <link rel="stylesheet" href="notification.css">
+    <script src="notification.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -34,12 +34,8 @@
         }
 
         @keyframes move {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100vw);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
         }
         /* --- End of Background Scene --- */
 
@@ -104,15 +100,18 @@
              transform: scale(0.96) translateZ(-20px); /* Deeper push on click */
              box-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
-
-        .error-message {
-            color: #fca5a5; /* light red */
-            font-size: 0.875rem; 
-            margin-top: 0.75rem; 
-            text-align: center;
-            min-height: 1.25rem;
-            font-weight: 500;
+        .button-spinner {
+            display: inline-block;
+            width: 1.1em;
+            height: 1.1em;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-left-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 0.75em;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -158,15 +157,11 @@
                         </div>
                     </div>
                     
-                       
-
-                    <!-- ***** UPDATED THIS SECTION ***** -->
                     <div class="text-right mb-8">
                         <a href="forgot-password.html" class="text-sm text-blue-400 hover:text-blue-300 hover:underline transition duration-300 ease-in-out font-medium"> 
                             Forgot Password?
                         </a>
                     </div>
-                    <!-- ****************************** -->
                     
                     <div class="button-container-3d">
                         <button type="submit" id="loginBtn"
@@ -174,14 +169,21 @@
                             Login Securely
                         </button>
                     </div>
-                    <p class="error-message" id="errorMessage"></p>
                 </form>
 
-                <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                <!-- ***** UPDATED THIS SECTION ***** -->
+                <div class="mt-8 text-center space-y-4">
+                    <a href="register.html" class="text-sm text-gray-400 hover:text-white hover:underline block">
+                        Need an admin account? Register Here
+                    </a>
+                    <a href="student-login.html" class="text-sm text-gray-400 hover:text-white hover:underline block">
+                        Are you a student? Login Here
+                    </a>
+                </div>
+                <!-- ****************************** -->
+
+                <div class="mt-4 pt-4 border-t border-gray-700 text-center">
                     <p class="text-xs text-gray-500">
-                        Authorized access only.
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">
                         &copy; <span id="currentYear"></span> Student Health Services. All rights reserved.
                     </p>
                 </div>
@@ -209,15 +211,17 @@
 
         // Animated Background Scene Logic
         const scene = document.getElementById('backgroundScene');
-        const lineCount = 50; // Number of lines
-        for (let i = 0; i < lineCount; i++) {
-            const line = document.createElement('div');
-            line.className = 'line';
-            line.style.top = `${Math.random() * 100}vh`;
-            line.style.width = `${Math.random() * 200 + 100}px`;
-            line.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5 to 10 seconds
-            line.style.animationDelay = `${Math.random() * 5}s`;
-            scene.appendChild(line);
+        if (scene) {
+            const lineCount = 50;
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                line.style.top = `${Math.random() * 100}vh`;
+                line.style.width = `${Math.random() * 200 + 100}px`;
+                line.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                line.style.animationDelay = `${Math.random() * 5}s`;
+                scene.appendChild(line);
+            }
         }
     </script>
     <script src="main.js"></script>
