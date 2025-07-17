@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const Complaint = require('../models/Complaint'); // Using the updated Complaint model
-const Student = require('../models/students'); // To populate student details
+const Student = require('../models/student'); // To populate student details
 const { protect } = require('../middleware/authMiddleware'); // Your security guard
 const { sendNewMessageAlert } = require('../utils/emailService'); // Import the email service
 

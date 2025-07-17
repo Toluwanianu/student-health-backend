@@ -3,7 +3,7 @@
 
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/students');
+const Student = require('../models/student');
 const Complaint = require('../models/Complaint'); // Import the Complaint model
 const { protect } = require('../middleware/authMiddleware');
 
