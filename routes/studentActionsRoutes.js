@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/student'); // Adjust the path to your Student model
+const Student = require('../models/students'); // Adjust the path to your Student model
 
 // POST /api/students/bulk-import
 // Route to handle inserting multiple student records at once.

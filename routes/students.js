@@ -3,7 +3,7 @@
 
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/student'); // <-- CORRECTED from '../models/Student'
+const Student = require('../models/students'); // <-- CORRECTED from '../models/Student'
 const { protect } = require('../middleware/authMiddleware');
 const PDFDocument = require('pdfkit');
 

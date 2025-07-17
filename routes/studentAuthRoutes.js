@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto'); // Built-in Node.js module for generating tokens
-const Student = require('../models/student');
+const Student = require('../models/students');
 const { protect } = require('../middleware/authMiddleware');
 
 // POST /api/student/login - Student Login
