@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // ***** THIS IS THE CORRECTED URL *****
-            // It should point to your backend server on Render.
+            // It now points to your backend server on Render.
             const apiUrl = 'https://student-health-backend.onrender.com/api/auth/register';
             // ************************************
 
