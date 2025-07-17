@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Admin | Student Health System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="notification.css">
+    <script src="notification.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow: hidden; }
+        .background-scene { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #00000c; z-index: -1; }
+        .line { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, #3c71b5, transparent); animation: move 10s linear infinite; }
+        @keyframes move { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+        .login-panel-3d { background: rgba(17, 25, 40, 0.75); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.125); }
+        .button-spinner { display: inline-block; width: 1.1em; height: 1.1em; border: 3px solid rgba(255, 255, 255, 0.4); border-left-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 0.75em; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="background-scene" id="backgroundScene"></div>
+    <div class="flex items-center justify-center min-h-screen p-4 sm:p-6">
+        <div class="login-panel-3d rounded-2xl flex flex-col w-full max-w-md overflow-hidden my-auto">
+            <div class="p-8 sm:p-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-100 mb-3 text-center">Create Admin Account</h2>
+                <p class="text-gray-400 mb-10 text-center">Enter details for the new administrator.</p>
+
+                <form id="registerForm">
+                    <div class="mb-6">
+                        <label for="username" class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                        <input type="text" id="username" name="username" required
+                               class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                               placeholder="Enter a username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                        <input type="password" id="password" name="password" required
+                               class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                               placeholder="Enter a secure password">
+                    </div>
+                    <div class="mb-8">
+                        <label for="confirmPassword" class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required
+                               class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                               placeholder="Confirm the password">
+                    </div>
+                    
+                    <button type="submit" id="registerBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3.5 px-4 rounded-lg transition text-lg">
+                        Register Admin
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <a href="login.html.html" class="text-sm text-blue-400 hover:text-blue-300 hover:underline">Already have an account? Login here.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="register.js"></script>
+</body>
+</html>
