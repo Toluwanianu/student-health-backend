@@ -5,18 +5,18 @@ require('dotenv').config(); // This MUST be at the very top
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const listEndpoints = require('express-list-endpoints');
+const listEndpoints = require('express-list-endpoints'); // For debugging
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use Render's port
+const PORT = process.env.PORT || 3000;
 
 // --- Middleware ---
 app.use(cors());
 app.use(express.json());
 
 // --- API Routes ---
-// IMPORTANT: The path must exactly match the filename (including case).
-const studentRoutes = require("./routes/students"); // Corrected from "./routes/Students"
+// IMPORTANT: Ensure your filenames in the 'routes' folder match these exactly (lowercase).
+const studentRoutes = require("./routes/students");
 const authRoutes = require("./routes/authRoutes");
 const studentAuthRoutes = require("./routes/studentAuthRoutes");
 const statsRoutes = require('./routes/statsRoutes');
