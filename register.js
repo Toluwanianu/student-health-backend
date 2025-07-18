@@ -1,5 +1,5 @@
 // File: register.js
-// Handles the admin registration form submission with the correct API URL.
+// Handles the admin registration form submission with corrected URL and safer JSON parsing.
 
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         registerBtn.innerHTML = `<span class="button-spinner"></span> Registering...`;
 
         try {
-            // ***** THIS IS THE CORRECTED URL *****
-            // It now points to your backend server on Render.
+            // ***** 1. CORRECTED API URL *****
+            // This now points to your live backend server on Render.
             const apiUrl = 'https://student-health-backend.onrender.com/api/auth/register';
-            // ************************************
+            // *********************************
 
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -38,12 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ username, password, confirmPassword })
             });
 
-            const responseData = await response.json();
+            // ***** 2. SAFEGUARD FOR JSON PARSING *****
+            // Check the content type of the response before trying to parse it as JSON.
+            const contentType = response.headers.get('content-type');
+            let responseData;
+
+            if (contentType && contentType.indexOf('application/json') !== -1) {
+                responseData = await response.json();
+            } else {
+                // If the response is not JSON (e.g., an HTML error page), handle it as a text error.
+                const textResponse = await response.text();
+                throw new Error(`Server returned a non-JSON response: ${textResponse}`);
+            }
+            // ****************************************
 
             if (response.ok) {
                 showToast('Admin registered successfully! You can now log in.', 'success');
                 setTimeout(() => {
-                    window.location.href = 'login.html.html'; // Or index.html if you renamed it
+                    window.location.href = 'login.html.html'; // Redirect to the main login page
                 }, 2000);
             } else {
                 showToast(responseData.message || 'Registration failed.', 'error');
