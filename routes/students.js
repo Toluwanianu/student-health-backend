@@ -31,7 +31,6 @@ router.get("/", protect, async (req, res) => {
         const students = await Student.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
         res.json({ students, currentPage: page, totalPages, totalRecords });
     } catch (err) {
-        console.error("[Backend] Error fetching students:", err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -78,7 +77,7 @@ router.get("/:id/download-pdf", protect, async (req, res) => {
         // Add more fields as needed...
         doc.end();
     } catch (err) {
-        console.error("[Backend] Error generating PDF:", err);
+        console.error("https://student-health-backend.onrender.com Error generating PDF:", err);
         res.status(500).send("Failed to generate PDF document.");
     }
 });
@@ -110,6 +109,34 @@ router.delete("/:id", protect, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+});
+
+// POST /api/students/bulk-import - Bulk import students
+router.post("/bulk-import", protect, async (req, res) => {
+    const studentsToImport = req.body.students;
+    if (!studentsToImport || !Array.isArray(studentsToImport) || studentsToImport.length === 0) {
+        return res.status(400).json({ message: 'Request must include a non-empty array of students.' });
+    }
+    try {
+        const insertedStudents = await Student.insertMany(studentsToImport, { ordered: false }); 
+        res.status(201).json({
+            message: `Successfully imported ${insertedStudents.length} of ${studentsToImport.length} records.`,
+            successCount: insertedStudents.length,
+            attemptedCount: studentsToImport.length,
+        });
+    } catch (error) {
+        if (error.writeErrors) {
+            const successfulCount = error.insertedDocs?.length || 0;
+            const failedCount = error.writeErrors.length;
+            const totalAttempted = successfulCount + failedCount;
+            const errorSummary = error.writeErrors.map(err => `Record #${err.index}: ${err.errmsg}`).join('\n');
+            return res.status(400).json({
+                message: `Partial success. Imported ${successfulCount} of ${totalAttempted} records. Some records had errors.`,
+                errorDetails: errorSummary
+            });
+        }
+        res.status(500).json({ message: 'A server error occurred during the bulk import process.', error: error.message });
+    }
 });
 
 module.exports = router;
